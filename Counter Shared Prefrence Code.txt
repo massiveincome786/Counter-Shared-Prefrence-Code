@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CounteraActivity">
+
+    <TextView
+        android:id="@+id/tx"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="56dp"
+        android:text="0"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textSize="22sp"
+        app:layout_constraintBottom_toTopOf="@+id/bt"
+        app:layout_constraintEnd_toEndOf="@+id/bt"
+        app:layout_constraintHorizontal_bias="0.466"
+        app:layout_constraintStart_toStartOf="@+id/bt" />
+
+    <Button
+        android:id="@+id/bt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Count"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+.............................................
+JAVA CODES............................................
+
+package com.example.shareprefrenscespractics;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
+
+public class CounteraActivity extends AppCompatActivity {
+
+    private int mCounter = 0;
+    Button btn;
+    TextView txv;
+    int getvalue;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_countera);
+        btn =(Button) findViewById(R.id.bt);
+        txv =(TextView) findViewById(R.id.tx);
+
+
+        SharedPreferences sharedPreferences=getSharedPreferences("my_counter",MODE_PRIVATE);
+         getvalue=sharedPreferences.getInt("counter_value",0);
+
+
+             mCounter=getvalue;
+             txv.setText(Integer.toString(mCounter));
+
+
+
+
+
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mCounter ++;
+                txv.setText(Integer.toString(mCounter));
+                SharedPreferences.Editor editor=getSharedPreferences("my_counter",MODE_PRIVATE).edit();
+                editor.putInt("counter_value", mCounter);
+                editor.apply();
+
+
+            }
+        });
+
+
+    }
+
+}
+
